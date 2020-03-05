@@ -3324,7 +3324,7 @@ function populateMainPage(){
      }
 
 function getEncryptionValue(msg,key){
-	alert("getEncryptionValue");
+	alert("getEncryptionValue = "+msg);
 		var encrypted = CryptoJS.AES.encrypt(msg,key);  
 		alert("encrypted "+encrypted);
 		var ivHex = encrypted.iv.toString();
