@@ -42,6 +42,7 @@ document.addEventListener("deviceready",loaded,false);
 
 function login()
    {
+   	alert("login");
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
 	}else if(document.getElementById("userName")!=null){
@@ -54,6 +55,7 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
+	alert("userName "+userName);
 	var check = userName.includes(companyName);
 	alert("check "+check);
 	if(check)
@@ -3322,7 +3324,9 @@ function populateMainPage(){
      }
 
 function getEncryptionValue(msg,key){
+	alert("getEncryptionValue");
 		var encrypted = CryptoJS.AES.encrypt(msg,key);  
+		alert("encrypted "+encrypted);
 		var ivHex = encrypted.iv.toString();
 		//alert("ivHex"+ivHex);
 	    var ivSize = encrypted.algorithm.ivSize; // same as the blockSize
@@ -3337,5 +3341,6 @@ function getEncryptionValue(msg,key){
 	    var cipherTextHex = encrypted.ciphertext.toString(); // must be sent
 	    
 	   var dencc=ivHex+'_'+ivSize+'_'+keySize+'_'+keyHex+'_'+saltHex+'_'+openSslFormattedCipherTextString+'_'+cipherTextHex;
+	alert("dencc 0 "+dencc);
 	return dencc;
 }
