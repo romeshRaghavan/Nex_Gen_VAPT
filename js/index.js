@@ -55,11 +55,15 @@ function login()
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
 	var check = userName.includes(companyName);
+	alert("check "+check);
 	if(check)
 	{
+		alert("1");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToBeSend);
+	 alert("tempJSON "+tempJSON);
      dencc = getEncryptionValue(tempJSON,'urlKey');
+     alert("dencc "+dencc);
      jsonToBeSend = new Object();
      jsonToBeSend["dencc"] = dencc;
  	}
