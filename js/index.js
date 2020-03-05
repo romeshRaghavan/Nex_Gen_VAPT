@@ -2227,6 +2227,7 @@ function hideTRMenus(){
 	}
 }
 function validateValidMobileUser(){
+	alert("validate");
 	var pgRef;
 	var headerBackBtn;
 	var jsonToBeSend=new Object();
@@ -2234,12 +2235,16 @@ function validateValidMobileUser(){
 		&& (window.localStorage.getItem("UserStatus")==null || window.localStorage.getItem("UserStatus")=='Valid')){
 		jsonToBeSend["user"]=window.localStorage.getItem("UserName");
 		jsonToBeSend["pass"]=window.localStorage.getItem("Password");
+		alert(jsonToBeSend["pass"]);
 			var userName =window.localStorage.getItem("UserName");
 			var check = userName.includes(companyName);
+			alert("check "+check);
 		if(check){
 		var dencc = "";
 	 	var tempJSON = JSON.stringify(jsonToSaveBE);
+	 	alert("tempJSON "+tempJSON);
     	dencc = getEncryptionValue(tempJSON,'urlKey');
+    	alert("dencc "+dencc);
     	jsonToSaveBE = new Object();
     	jsonToSaveBE["dencc"] = dencc;
     	}
