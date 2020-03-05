@@ -1,175 +1,173 @@
-<script type="text/javascript">
-    var lang = new Lang();
-    lang.dynamic('th', 'js/langpack/th.json');
-    lang.dynamic('ru', 'js/langpack/russian.json');
-    lang.dynamic('ae', 'js/langpack/arabic.json');
-    lang.dynamic('tamil', 'js/langpack/tamil.json');
-    lang.dynamic('hindi', 'js/langpack/hindi.json');
-    lang.dynamic('ka', 'js/langpack/kannada.json');
-    lang.dynamic('sd', 'js/langpack/swidish.json');
-    lang.dynamic('vt', 'js/langpack/vietnam.json');
-    lang.init({
-        defaultLang: 'en'
-    });
-    var smsWatchFlag = window.localStorage.getItem("smsWatchStatus");
-    var smartClaimsRole = window.localStorage.getItem("smartClaimsViaSMSOnMobile");
-    if (smartClaimsRole) {
-        if (smsWatchFlag == false) {
-            startWatch();
+ <script type="text/javascript">
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+        lang.dynamic('tamil','js/langpack/tamil.json');
+        lang.dynamic('hindi','js/langpack/hindi.json');
+        lang.dynamic('ka','js/langpack/kannada.json');
+		lang.init({
+			defaultLang: 'en'
+		});
+        var smsWatchFlag=window.localStorage.getItem("smsWatchStatus");
+        var smartClaimsRole=window.localStorage.getItem("smartClaimsViaSMSOnMobile");
+         if(smartClaimsRole){
+             if(smsWatchFlag == false){
+                 startWatch();
+             }
         }
-    }
 </script>
-<script>
-    hideTRIcons();
+ <script>
+ 	hideTRIcons();
+    hideSmartClaims();
     hideBusinessExpense();
-    //hideSmartClaims();
-</script>
+ </script>
 
 <body style="padding:0px; margin:0px; background-color:#fff;font-family:'Open Sans',sans-serif,arial,helvetica,verdana">
 
-    <style>
-        .kebab {
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-            box-sizing: border-box;
-            padding: 0px 20px;
-            top: 20px;
-        }
-        
-        .kebab figure {
-            width: 6px;
-            height: 6px;
-            border-radius: 5px;
-            background: #00bcd4;
-            margin: 3px 0;
-        }
-        
-        .notification {
-            color: white;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-            border-radius: 2px;
-        }
-        
-        .notification .badge {
-            position: absolute;
-            top: 8px;
-            left: 163px;
-            border-radius: 50%;
-            background-color: red;
-            color: white;
-        }
-        
-        .badge {
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        /* Responsive columns */
-        
-        @media screen and (max-width: 600px) {
-            .column {
-                width: 100%;
-                display: block;
-                padding: 30px 5px 20px;
-            }
-        }
-        /* Style the counter cards */
-        
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            text-align: center;
-            background-color: #f1f1f1;
-        }
-    </style>
-    <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
-        <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
-        <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
-    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
 
-    <div class="col-md-6 accordions">
-        <section class="ac-container">
-            <div class="allcats" id="businessExpenseTab">
-                <div onclick="pastVoucherViews()" class="kebab" style="float:right;">
-                    <figure></figure>
-                    <figure class="middle"></figure>
-                    <figure></figure>
-                </div>
-                
-                <span class="claimicon" style="display: flex;"><img src="images/ic_3.png" style="border-radius: 50%;height: 40px;width: 40px;margin-top: -2px;"/>
-                </span>
-                <label lang="en" onclick="createBusiExpMain();" style="width:90%;">
-                    Claim Expense
-                    <h5 lang="en">Add Expense Claims</h5>
-                </label>
+            var jssor_1_SlideoTransitions = [
+              [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+              [{b:1900,d:2000,x:-379,e:{x:7}}],
+              [{b:1900,d:2000,x:-379,e:{x:7}}],
+              [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+            ];
+
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $SlideDuration: 800,
+              $SlideEasing: $Jease$.$OutQuint,
+              $CaptionSliderOptions: {
+                $Class: $JssorCaptionSlideo$,
+                $Transitions: jssor_1_SlideoTransitions
+              },
+              $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+              },
+              $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$
+              }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 1920);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            /*responsive code end*/
+        });
+    </script>
+    <style>
+        /* jssor slider bullet navigator skin 05 css */
+        /*
+        .jssorb05 div           (normal)
+        .jssorb05 div:hover     (normal mouseover)
+        .jssorb05 .av           (active)
+        .jssorb05 .av:hover     (active mouseover)
+        .jssorb05 .dn           (mousedown)
+        */
+        .jssorb05 {
+            position: absolute;
+        }
+        .jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+            position: absolute;
+            /* size of bullet elment */
+            width: 16px;
+            height: 16px;
+            background: url('img/b05.png') no-repeat;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .jssorb05 div { background-position: -7px -7px; }
+        .jssorb05 div:hover, .jssorb05 .av:hover { background-position: -37px -7px; }
+        .jssorb05 .av { background-position: -67px -7px; }
+        .jssorb05 .dn, .jssorb05 .dn:hover { background-position: -97px -7px; }
+
+        /* jssor slider arrow navigator skin 22 css */
+        /*
+        .jssora22l                  (normal)
+        .jssora22r                  (normal)
+        .jssora22l:hover            (normal mouseover)
+        .jssora22r:hover            (normal mouseover)
+        .jssora22l.jssora22ldn      (mousedown)
+        .jssora22r.jssora22rdn      (mousedown)
+        .jssora22l.jssora22lds      (disabled)
+        .jssora22r.jssora22rds      (disabled)
+        */
+        .jssora22l, .jssora22r {
+            display: block;
+            position: absolute;
+            /* size of arrow element */
+            width: 40px;
+            height: 58px;
+            cursor: pointer;
+            background: url('img/a22.png') center center no-repeat;
+            overflow: hidden;
+        }
+        .jssora22l { background-position: -10px -31px; }
+        .jssora22r { background-position: -70px -31px; }
+        .jssora22l:hover { background-position: -130px -31px; }
+        .jssora22r:hover { background-position: -190px -31px; }
+        .jssora22l.jssora22ldn { background-position: -250px -31px; }
+        .jssora22r.jssora22rdn { background-position: -310px -31px; }
+        .jssora22l.jssora22lds { background-position: -10px -31px; opacity: .3; pointer-events: none; }
+        .jssora22r.jssora22rds { background-position: -70px -31px; opacity: .3; pointer-events: none; }
+    </style>
+  <div id="jssor_1" style="position:inherit;margin:0 auto;top:5px;left:0px;width:1200px;height:577px;overflow:hidden;visibility:hidden;">
+        <!-- Loading Screen -->
+        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+            <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+        </div>
+        <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1300px;height:500px;overflow:hidden;">
+
+            <div data-p="225.00">
+                <img data-u="image" src="img/red.png" />
             </div>
-            <div class="allcats" id="CategoryTrRoleID">
-                <div onclick="TRTSAllViews()" id="TRkebab" class="kebab" style="float:right;">
-                    <figure></figure>
-                    <figure class="middle"></figure>
-                    <figure></figure>
-                </div>
-      
-                <span class="claimicon" style="display: flex;"><img src="images/ic_2.png" style="border-radius: 50%;height: 40px;width: 40px;margin-top: -2px;"/></span>
-                <label lang="en" onclick="createTravelMain();" style="width:90%;">
-                    Travel Management
-                    <h5 lang="en">Add Travel Requests, Travel Settelments </h5>
-                </label>
-            </div>
-            <div class="allcats" style="display: none;">
-                <span class="claimicongift"><i class="fa fa-briefcase" aria-hidden="true"></i> </span>
-                <label lang="en" onclick="createWallet();" style="" for="ac-2">
-                    My Receipts Wallet
-                </label>
-            </div>
-            <div id="approver" class="allcats">
-                <span class="claimicon" style="display: flex;"><img src="images/ic_1.png" style="border-radius: 50%;height: 40px;width: 40px;margin-top: -2px;"/>
-                </span>
-                <label lang="en" onclick="viewVoucherHeaders('A');" style="" for="ac-2">
-                    Expense Approval
-                    <div class="badge" id="count" style="margin-top: 5px;"></div>
-                    <h5 lang="en">Approve / Send Back Claims</h5>
-                </label>
-            </div>
-            <div id="trTsApprover" class="allcats">
-                <span class="claimicon" style="display: flex;"><img src="images/ic_4.png" style="border-radius: 50%;height: 40px;width: 40px;margin-top: -2px;"/>
-                </span>
-                <label lang="en" onclick="viewTravelVoucherHeaders('A');" style="" for="ac-2">
-                    Travel Approval
-                    <div class="badge" id="travelCount" style="margin-top: 5px;"></div>
-                    <h5 lang="en">Approve / Send Back Travel</h5>
-                </label>
-            </div>
-            <div id="query" class="allcats">
-                <span class="claimicon" style="display: flex;"><img src="images/ic_5.png" style="border-radius: 50%;height: 40px;width: 40px;margin-top: -2px;"/>
-                </span>
-                <label lang="en" onclick="viewVoucherHeaders('Q');" for="ac-2" style="line-height: 45px;">
-                    Queries
-                    <div class="badge" id="totalQueryCount" style="margin-top: 5px;"></div>
-                    <h5 lang="en"></h5>
-                </label>
-            </div>
-        </section>
+
+        </div>
+        <!-- Bullet Navigator -->
+        <div data-u="navigator" class="jssorb05" style="bottom:5px;right:5px;" data-autocenter="1">
+            <!-- bullet navigator item prototype -->
+            <div data-u="prototype" style="width:10px;height:10px;"></div>
+        </div>
+        <!-- Arrow Navigator -->
+        <span data-u="arrowleft" class="jssora22l" style="top:0px;left:8px;width:40px;height:58px;" data-autocenter="2"></span>
+        <span data-u="arrowright" class="jssora22r" style="top:0px;right:8px;width:40px;height:58px;" data-autocenter="2"></span>
     </div>
+    <div class="col-md-6 accordions">
+         <section class="ac-container">
+               <div id="businessExpenseTab">
+				<label lang="en"onclick="createBusiExpMain();">Business Expense</label>
+				</div>
+				<div id="CategoryTrRoleID">
+				<label  lang="en" onclick="createTravelMain();" style="background: #8fae51 url(images/ar-n.png) no-repeat right;" for="ac-2">Travel Management</label>
+                </div>
+				<div>
+               <label lang="en" onclick="createWallet();" style="background: #8775a7 url(images/ar-n.png) no-repeat right;" for="ac-2">My Receipts Wallet</label>
+				</div>
+             <div id="smartClaimsID">
+               <label lang="en" onclick="viewMessages();" style="background: #b75353 url(images/ar-n.png) no-repeat right;" for="ac-2">Smart Expenses</label>
+                </div>
+         </section>
+    </div>
+<br>
+    <!-- #endregion Jssor Slider End -->
+   <!--  <center><a><p style="color: #19CFEF;font: caption;"> <b lang="en" onclick="showHelpMenu()">Help</b></p></a></center>-->
 </body>
 
-<script type="text/javascript">
-    fetchCountForMyApproval('A');
-    fetchCountForTravelMyApproval('A');
-     fetchCountForQuery('Q');
-    if (window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.2) {
-        document.getElementById('approver').style.display = 'none';
-        $('.kebab').hide();
-    }
-    if (window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.3) {
-        document.getElementById('query').style.display = 'none';
-    }
-     if (window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.4) {
-         $('#TRkebab').hide();
-        document.getElementById('trTsApprover').style.display = 'none';
-    }
-</script>
