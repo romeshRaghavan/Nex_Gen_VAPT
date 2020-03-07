@@ -8,7 +8,7 @@ var employeeId;
 var empFirstName;
 var successSyncStatusBE =false;
 var successSyncStatusTR =false;
-var companyName = "uttakarsh";
+var companyName = "utkarsh";
 var successMsgForCurrency = "Currency synchronized successfully.";
 var errorMsgForCurrency = "Currency not synchronized successfully.";
 
@@ -608,7 +608,7 @@ function synchronizeBEMasterData() {
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonSentToSync = new Object();
      jsonSentToSync["dencc"] = dencc;
  	}
@@ -800,7 +800,7 @@ function synchronizeBEMasterData() {
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonSentToSync = new Object();
      jsonSentToSync["dencc"] = dencc;
  }
@@ -1490,7 +1490,7 @@ function synchronizeTRForTS() {
 	if(check){
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
-    dencc = getEncryptionValue(tempJSON,'urlKey');
+    dencc = getEncryptionValue(tempJSON);
     jsonSentToSync = new Object();
     jsonSentToSync["dencc"] = dencc;
 	}
@@ -1628,7 +1628,7 @@ function synchronizeEAMasterData() {
 	if(check){
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
-    dencc = getEncryptionValue(tempJSON,'urlKey');
+    dencc = getEncryptionValue(tempJSON);
     jsonSentToSync = new Object();
     jsonSentToSync["dencc"] = dencc;
 	}

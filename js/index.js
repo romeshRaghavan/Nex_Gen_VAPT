@@ -1,7 +1,7 @@
 var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
-var companyName = "uttakarsh";
+var companyName = "utkarsh";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
@@ -59,7 +59,7 @@ function login()
 	{
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToBeSend);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToBeSend = new Object();
      jsonToBeSend["dencc"] = dencc;
  	}
@@ -83,7 +83,7 @@ function login()
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
                     if(check)
-                      window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value,'urlKey'));
+                      window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
                     else
                      window.localStorage.setItem("Password",password.value);
                     setUserStatusInLocalStorage("Valid");
@@ -98,7 +98,7 @@ function login()
 			  //addEmployeeDetails(data);
               window.localStorage.setItem("UserName",userName);
   				if(check)
-                 window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value,'urlKey'));
+                 window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
                  else
                  window.localStorage.setItem("Password",password.value);
                  setUserStatusInLocalStorage("Valid");
@@ -354,7 +354,7 @@ function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveBE = new Object();
      jsonToSaveBE["dencc"] = dencc;
  	 }
@@ -410,7 +410,7 @@ function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTS);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveTS = new Object();
      jsonToSaveTS["dencc"] = dencc;
  	 }
@@ -467,7 +467,7 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveBE = new Object();
      jsonToSaveBE["dencc"] = dencc;
      }
@@ -1040,7 +1040,7 @@ function saveTravelRequestAjax(jsonToSaveTR){
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveTR = new Object();
      jsonToSaveTR["dencc"] = dencc;
      }
@@ -2127,7 +2127,7 @@ function resetImageData(){
 				if(check){
 		 	  var dencc = "";
 	 		  var tempJSON = JSON.stringify(jsonWalletArr[i]);
-    		  encc = getEncryptionValue(tempJSON,'urlKey');
+    		  encc = getEncryptionValue(tempJSON);
      			jsonWalletArr[i] = new Object();
     			jsonWalletArr[i]["dencc"] = dencc;
     		             }
@@ -2239,7 +2239,7 @@ function validateValidMobileUser(){
 		if(check){
 		var dencc = "";
 	 	var tempJSON = JSON.stringify(jsonToBeSend);
-    	dencc = getEncryptionValue(tempJSON,'urlKey');
+    	dencc = getEncryptionValue(tempJSON);
     	jsonToBeSend = new Object();
     	jsonToBeSend["dencc"] = dencc;
     	}
@@ -2599,7 +2599,7 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveEA);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveEA = new Object();
      jsonToSaveEA["dencc"] = dencc;
         }
@@ -2945,7 +2945,7 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON,'urlKey');
+     dencc = getEncryptionValue(tempJSON);
      jsonToSaveBE = new Object();
      jsonToSaveBE["dencc"] = dencc;
  	      }
@@ -3317,7 +3317,8 @@ function populateMainPage(){
          j('#loading').hide();
      }
 
-function getEncryptionValue(msg,key){
+function getEncryptionValue(msg){
+	var key = "urlKey";
 		var encrypted = CryptoJS.AES.encrypt(msg,key);  
 		var ivHex = encrypted.iv.toString();
 		//alert("ivHex"+ivHex);
