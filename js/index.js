@@ -1037,11 +1037,13 @@ function syncSubmitTravelDetails(){
 function saveTravelRequestAjax(jsonToSaveTR){
 	var userName =window.localStorage.getItem("UserName");
 	var check = userName.includes(companyName);
+	var jsonToSaveTRTemp = new Object();
+
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
+	 jsonToSaveTRTemp = jsonToSaveTR;
      dencc = getEncryptionValue(tempJSON);
-     jsonToSaveTR = new Object();
      jsonToSaveTR["dencc"] = dencc;
      }
 	 var pageRefSuccess=defaultPagePath+'success.html';
@@ -1056,8 +1058,11 @@ function saveTravelRequestAjax(jsonToSaveTR){
 			  success: function(data) {
 				  if(data.Status=="Failure"){
 					  if(data.hasOwnProperty('IsEntitlementExceed')){
+						if(check){
+							setTREntitlementExceedMessage(data,jsonToSaveTRTemp);
+						}else{
 							setTREntitlementExceedMessage(data,jsonToSaveTR);
-							 
+						}							 
 						}
 					  successMessage = data.Message;
                       //alert(window.lang.translate(successMessage));
@@ -1608,25 +1613,24 @@ function setDelayMessage(returnJsonData,jsonToBeSend,busExpDetailsArr){
 		}			
 }
 
-function setTREntitlementExceedMessage(returnJsonData,jsonToBeSend){
-		var msg=returnJsonData.Message+".\nThis voucher has exceeded Entitlements. Do you want to proceed?";
-	navigator.notification.confirm(msg,
-		function(buttonIndex){
-            onConfirm(buttonIndex, msg,jsonToBeSend);
-        }, 
-		'confirm', 'Yes, No');
+function setTREntitlementExceedMessage(returnJsonData, jsonToBeSend) {
+    var msg = returnJsonData.Message + ".\nThis voucher has exceeded Entitlements. Do you want to proceed?";
+    var IsEntitlementExceed = confirm(msg);
+    if (IsEntitlementExceed == true) {
+        onConfirm(IsEntitlementExceed, msg, jsonToBeSend);
+    } else {
+        return false;
+    }
+}
 
-	
-	}
-
-function onConfirm(buttonIndex,errormsg,jsonToBeSend){
-    if (buttonIndex === 1){
-    	jsonToBeSend["EntitlementAllowCheck"]=true;
-         j('#loading_Cat').show();
-		saveTravelRequestAjax(jsonToBeSend);
-    }else{
+function onConfirm(IsEntitlementExceed, errormsg, jsonToBeSend) {
+    if (IsEntitlementExceed == true) {
+        jsonToBeSend["EntitlementAllowCheck"] = true;
+        j('#loading_Cat').show();
+        saveTravelRequestAjax(jsonToBeSend);
+    } else {
         j('#loading_Cat').hide();
-    	return false;
+        return false;
     }
 
 }
@@ -2116,18 +2120,23 @@ function resetImageData(){
 	
 	
 	function saveWalletDetails(jsonWalletArr,jsonWalletIDArr){
+		alert("1");
 		 var walletID;
 		 var i = 0;
 		 var headerBackBtn=defaultPagePath+'headerPageForWalletOperation.html';
 		 var pageRef=defaultPagePath+'addToWallet.html';
 		 j('#loading_Cat').show();
+		 alert(jsonWalletArr.length);
 		 for(i; i<jsonWalletArr.length; i++ ){
+		 	alert("jsonWalletArr[i] "+jsonWalletArr[i]);
 		 		var userName =window.localStorage.getItem("UserName");
 				var check = userName.includes(companyName);
 				if(check){
 		 	  var dencc = "";
 	 		  var tempJSON = JSON.stringify(jsonWalletArr[i]);
-    		  encc = getEncryptionValue(tempJSON);
+	 		  alert("tempJSON "+tempJSON);
+    		  dencc = getEncryptionValue(tempJSON);
+    		  alert("dencc "+dencc);
      			jsonWalletArr[i] = new Object();
     			jsonWalletArr[i]["dencc"] = dencc;
     		             }
