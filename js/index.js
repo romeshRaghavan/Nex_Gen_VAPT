@@ -2120,32 +2120,30 @@ function resetImageData(){
 	
 	
 	function saveWalletDetails(jsonWalletArr,jsonWalletIDArr){
-		alert("1");
 		 var walletID;
 		 var i = 0;
 		 var headerBackBtn=defaultPagePath+'headerPageForWalletOperation.html';
 		 var pageRef=defaultPagePath+'addToWallet.html';
 		 j('#loading_Cat').show();
-		 alert(jsonWalletArr.length);
 		 for(i; i<jsonWalletArr.length; i++ ){
-		 	alert("jsonWalletArr[i] "+jsonWalletArr[i]);
 		 		var userName =window.localStorage.getItem("UserName");
+		 		var jsonWalletArrTemp = new Object();
 				var check = userName.includes(companyName);
-				if(check){
+			if(check){
 		 	  var dencc = "";
 	 		  var tempJSON = JSON.stringify(jsonWalletArr[i]);
-	 		  alert("tempJSON "+tempJSON);
     		  dencc = getEncryptionValue(tempJSON);
-    		  alert("dencc "+dencc);
      			jsonWalletArr[i] = new Object();
-    			jsonWalletArr[i]["dencc"] = dencc;
-    		             }
+    			jsonWalletArrTemp[i]["dencc"] = dencc;
+    		         }else{
+    		    jsonWalletArrTemp[i] = jsonWalletArr[i];	
+    		          }
 			 j.ajax({
 					  url: window.localStorage.getItem("urlPath")+"WalletReceiptsService",
 					  type: 'POST',
 					  dataType: 'json',
 					  crossDomain: true,
-					  data: JSON.stringify(jsonWalletArr[i]),
+					  data: JSON.stringify(jsonWalletArrTemp[i]),
 					  success: function(data) {
 						if(data.SyncStatus=="Success"){
 							for(var i=0; i<jsonWalletIDArr.length; i++ ){
