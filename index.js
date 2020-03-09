@@ -2128,13 +2128,24 @@ function resetImageData(){
 		 for(i; i<jsonWalletArr.length; i++ ){
 		 		var userName =window.localStorage.getItem("UserName");
 				var check = userName.includes(companyName);
-    		          
+			    var jsonWalletArrTemp = new Object();
+
+    		       if(check)
+					{
+				 var dencc = "";
+				 var tempJSON = JSON.stringify(jsonWalletArr[i]);
+   				  dencc = getEncryptionValue(tempJSON);
+   				jsonWalletArr[i] = new Object();
+    			 jsonWalletArrTemp[i]["dencc"] = dencc;
+ 					}else{
+ 						jsonWalletArrTemp[i] = jsonWalletArr[i];
+ 					}   
 			 j.ajax({
 					  url: window.localStorage.getItem("urlPath")+"WalletReceiptsService",
 					  type: 'POST',
 					  dataType: 'json',
 					  crossDomain: true,
-					  data: JSON.stringify(jsonWalletArr[i]),
+					  data: JSON.stringify(jsonWalletArrTemp[i]),
 					  success: function(data) {
 						if(data.SyncStatus=="Success"){
 							for(var i=0; i<jsonWalletIDArr.length; i++ ){
