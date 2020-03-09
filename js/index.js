@@ -2128,14 +2128,13 @@ function resetImageData(){
 		 for(i; i<jsonWalletArr.length; i++ ){
 		 		var userName =window.localStorage.getItem("UserName");
 				var check = userName.includes(companyName);
-			    var jsonWalletArrTemp = new Object();
     		       if(check)
 					{
 				var dencc = "";
 				var tempJSON = JSON.stringify(jsonWalletArr[i]);
    				dencc = getEncryptionValue(tempJSON);
    				jsonWalletArr[i] = new Object();
-   				jsonWalletArr[i][dencc] = jsonWalletArr[i];
+   				jsonWalletArr[i]["dencc"] = dencc;
  					} 
 			 j.ajax({
 					  url: window.localStorage.getItem("urlPath")+"WalletReceiptsService",
