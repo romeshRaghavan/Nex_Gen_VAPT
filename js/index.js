@@ -152,6 +152,7 @@ function login()
 }
  
 function commanLogin(){
+	alert("commanLogin  1 ");
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
@@ -170,9 +171,11 @@ function commanLogin(){
          crossDomain: true,
          data: JSON.stringify(jsonToDomainNameSend),
 		 success: function(data) {
+		 	alert(data.status);
          	if (data.status == 'Success'){
          		urlPath = data.message;
          		setUrlPathLocalStorage(urlPath);
+         		alert("-1");
          		login();
         	}else if(data.status == 'Failure'){
 				successMessage = data.message;
