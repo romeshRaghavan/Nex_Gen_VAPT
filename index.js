@@ -54,7 +54,7 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
-	var check = userName.includes(companyName);
+//	var check = userName.includes(companyName);
 //	if(check)
 //	{
 //	 var dencc = "";
@@ -82,9 +82,9 @@ function login()
                     j('#mainContainer').load(pageRef); 
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
-                    if(check)
-                      window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
-                    else
+                    //if(check)
+                    //  window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
+                   // else
                      window.localStorage.setItem("Password",password.value);
                     setUserStatusInLocalStorage("Valid");
 			        setUserSessionDetails(data,jsonToBeSend);
@@ -97,9 +97,9 @@ function login()
               appPageHistory.push(pageRef);
 			  //addEmployeeDetails(data);
               window.localStorage.setItem("UserName",userName);
-  				if(check)
-                 window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
-                 else
+  				//if(check)
+                // window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
+               //  else
                  window.localStorage.setItem("Password",password.value);
                  setUserStatusInLocalStorage("Valid");
 			  setUserSessionDetails(data,jsonToBeSend);
