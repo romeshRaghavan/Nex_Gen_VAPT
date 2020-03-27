@@ -68,12 +68,12 @@ function login()
 	 urlPath=window.localStorage.getItem("urlPath");
 	 alert("urlPath "+urlPath);
 	j('#loading').show();
+	    alert("2nd json "+JSON.stringify(jsonToBeSend));
     j.ajax({
          url: urlPath+"LoginWebService",
          type: 'POST',
          dataType: 'json',
          crossDomain: true,
-         alert("2nd json "+JSON.stringify(jsonToBeSend));
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
          	alert("2 status "+data.Status);
