@@ -54,7 +54,7 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
-//	var check = userName.includes(companyName);
+	var check = userName.includes(companyName);
 //	if(check)
 //	{
 //	 var dencc = "";
