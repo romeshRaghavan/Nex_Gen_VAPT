@@ -66,15 +66,17 @@ function login()
  //	}
  alert("2");
 	 urlPath=window.localStorage.getItem("urlPath");
+	 alert("urlPath "+urlPath);
 	j('#loading').show();
     j.ajax({
          url: urlPath+"LoginWebService",
          type: 'POST',
          dataType: 'json',
          crossDomain: true,
+         alert("2nd json "+JSON.stringify(jsonToBeSend));
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
-         	alert(data.Status);
+         	alert("2 status "+data.Status);
          	if (data.Status == 'Success'){
                 
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
@@ -162,7 +164,7 @@ function commanLogin(){
 	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
-  	alert(JSON.stringify(jsonToDomainNameSend));
+  	alert("1st json "+JSON.stringify(jsonToDomainNameSend));
 	var requestPath = WebServicePath;
 	alert(requestPath);
 	j.ajax({
@@ -173,7 +175,7 @@ function commanLogin(){
          crossDomain: true,
          data: JSON.stringify(jsonToDomainNameSend),
 		 success: function(data) {
-		 	alert(data.status);
+		 	alert("1 status "+data.status);
          	if (data.status == 'Success'){
          		urlPath = data.message;
          		setUrlPathLocalStorage(urlPath);
