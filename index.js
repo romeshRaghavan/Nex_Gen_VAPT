@@ -42,6 +42,7 @@ document.addEventListener("deviceready",loaded,false);
 
 function login()
    {
+   	alert("1");
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
 	}else if(document.getElementById("userName")!=null){
@@ -63,6 +64,7 @@ function login()
  //   jsonToBeSend = new Object();
  //   jsonToBeSend["dencc"] = dencc;
  //	}
+ alert("2");
 	 urlPath=window.localStorage.getItem("urlPath");
 	j('#loading').show();
     j.ajax({
@@ -72,6 +74,7 @@ function login()
          crossDomain: true,
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
+         	alert(data.Status);
          	if (data.Status == 'Success'){
                 
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
