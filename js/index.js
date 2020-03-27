@@ -54,15 +54,15 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
-	var check = userName.includes(companyName);
-	if(check)
-	{
-	 var dencc = "";
-	 var tempJSON = JSON.stringify(jsonToBeSend);
-     dencc = getEncryptionValue(tempJSON);
-     jsonToBeSend = new Object();
-     jsonToBeSend["dencc"] = dencc;
- 	}
+//	var check = userName.includes(companyName);
+//	if(check)
+//	{
+//	 var dencc = "";
+// var tempJSON = JSON.stringify(jsonToBeSend);
+ //   dencc = getEncryptionValue(tempJSON);
+ //   jsonToBeSend = new Object();
+ //   jsonToBeSend["dencc"] = dencc;
+ //	}
 	 urlPath=window.localStorage.getItem("urlPath");
 	j('#loading').show();
     j.ajax({
