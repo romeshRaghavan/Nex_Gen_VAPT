@@ -42,7 +42,6 @@ document.addEventListener("deviceready",loaded,false);
 
 function login()
    {
-   	alert("1");
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
 	}else if(document.getElementById("userName")!=null){
@@ -55,20 +54,19 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
-	var check = userName.includes(companyName);
+ 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	if(check)
 	{
-	 var dencc = "";
- var tempJSON = JSON.stringify(jsonToBeSend);
-    dencc = getEncryptionValue(tempJSON);
+	var dencc = "";
+ 	var tempJSON = JSON.stringify(jsonToBeSend);
+ 	var token = generateToken();
+    dencc = getNewValueDefine(tempJSON,token);
     jsonToBeSend = new Object();
-    jsonToBeSend["dencc"] = dencc;
+    jsonToBeSend["dencc"] = dencc+"$"+token;
  	}
- alert("2");
 	 urlPath=window.localStorage.getItem("urlPath");
-	 alert("urlPath "+urlPath);
 	j('#loading').show();
-	    alert("2nd json "+JSON.stringify(jsonToBeSend));
     j.ajax({
          url: urlPath+"LoginWebService",
          type: 'POST',
@@ -76,7 +74,6 @@ function login()
          crossDomain: true,
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
-         	alert("2 status "+data.Status);
          	if (data.Status == 'Success'){
                 
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
@@ -87,8 +84,10 @@ function login()
                     j('#mainContainer').load(pageRef); 
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
-                    if(check)
-                      window.localStorage.setItem("Password","dencc="+getEncryptionValue(password.value));
+                    if(check){
+                    	 	 token = generateToken();
+                      window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
+                    }
                     else
                      window.localStorage.setItem("Password",password.value);
                     setUserStatusInLocalStorage("Valid");
@@ -154,19 +153,16 @@ function login()
 }
  
 function commanLogin(){
-	alert("commanLogin  1 ");
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
-	 var jsonToDomainNameSend = new Object();
+	var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
 	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
 	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
-  	alert("1st json "+JSON.stringify(jsonToDomainNameSend));
 	var requestPath = WebServicePath;
-	alert(requestPath);
 	j.ajax({
          url: requestPath,
          type: 'POST',
@@ -175,11 +171,9 @@ function commanLogin(){
          crossDomain: true,
          data: JSON.stringify(jsonToDomainNameSend),
 		 success: function(data) {
-		 	alert("1 status "+data.status);
          	if (data.status == 'Success'){
          		urlPath = data.message;
          		setUrlPathLocalStorage(urlPath);
-         		alert("-1");
          		login();
         	}else if(data.status == 'Failure'){
 				successMessage = data.message;
@@ -360,13 +354,15 @@ function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 	 jsonToSaveBE["expenseDetails"] = jsonBEArr;
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
-	 var check = userName.includes(companyName);
+ 	 var domainName = userName.split('@')[1];
+	 var check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonToSaveBE = new Object();
-     jsonToSaveBE["dencc"] = dencc;
+     jsonToSaveBE["dencc"] = dencc+"$"+token;
  	 }
 	 var pageRefSuccess=defaultPagePath+'success.html';
      var pageRefFailure=defaultPagePath+'failure.html';
@@ -416,13 +412,15 @@ function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 	 jsonToSaveTS["expenseDetails"] = jsonTSArr;
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
-	 var check = userName.includes(companyName);
+ 	 var domainName = userName.split('@')[1];
+	 var check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTS);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonToSaveTS = new Object();
-     jsonToSaveTS["dencc"] = dencc;
+     jsonToSaveTS["dencc"] = dencc+"$"+token;
  	 }
      var pageRefSuccess=defaultPagePath+'success.html';
      var pageRefFailure=defaultPagePath+'failure.html';
@@ -473,13 +471,15 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 jsonToSaveBE["ProcessStatus"] = "1";
 	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 var userName =window.localStorage.getItem("UserName");
-	 var check = userName.includes(companyName);
+ 	 var domainName = userName.split('@')[1];
+	 var check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonToSaveBE = new Object();
-     jsonToSaveBE["dencc"] = dencc;
+     jsonToSaveBE["dencc"] = dencc+"$"+token;
      }
      var pageRefSuccess=defaultPagePath+'success.html';
      var pageRefFailure=defaultPagePath+'failure.html';
@@ -1046,15 +1046,17 @@ function syncSubmitTravelDetails(){
 
 function saveTravelRequestAjax(jsonToSaveTR){
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+ 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	var jsonToSaveTRTemp = new Object();
 
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
 	 jsonToSaveTRTemp = jsonToSaveTR;
-     dencc = getEncryptionValue(tempJSON);
-     jsonToSaveTR["dencc"] = dencc;
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
+     jsonToSaveTR["dencc"] = dencc+"$"+token;
      }
 	 var pageRefSuccess=defaultPagePath+'success.html';
      var pageRefFailure=defaultPagePath+'failure.html';
@@ -2137,14 +2139,16 @@ function resetImageData(){
 		 j('#loading_Cat').show();
 		 for(i; i<jsonWalletArr.length; i++ ){
 		 		var userName =window.localStorage.getItem("UserName");
-				var check = userName.includes(companyName);
+		 		var domainName = userName.split('@')[1];
+				var check = domainName.includes(companyName);
     		       if(check)
 					{
 				var dencc = "";
 				var tempJSON = JSON.stringify(jsonWalletArr[i]);
-   				dencc = getEncryptionValue(tempJSON);
+				var token = generateToken();
+   				dencc = getNewValueDefine(tempJSON,token);
    				jsonWalletArr[i] = new Object();
-   				jsonWalletArr[i]["dencc"] = dencc;
+   				jsonWalletArr[i]["dencc"] = dencc+"$"+token;
  					} 
 			 j.ajax({
 					  url: window.localStorage.getItem("urlPath")+"WalletReceiptsService",
@@ -2250,13 +2254,15 @@ function validateValidMobileUser(){
 		jsonToBeSend["user"]=window.localStorage.getItem("UserName");
 		jsonToBeSend["pass"]=window.localStorage.getItem("Password");
 			var userName =window.localStorage.getItem("UserName");
-			var check = userName.includes(companyName);
+ 	        var domainName = userName.split('@')[1];
+			var check = domainName.includes(companyName);
 		if(check){
 		var dencc = "";
 	 	var tempJSON = JSON.stringify(jsonToBeSend);
-    	dencc = getEncryptionValue(tempJSON);
+	 	var token = generateToken();
+    	dencc = getNewValueDefine(tempJSON);
     	jsonToBeSend = new Object();
-    	jsonToBeSend["dencc"] = dencc;
+    	jsonToBeSend["dencc"] = dencc+"$"+token;
     	}
 		j.ajax({
 	         url:  window.localStorage.getItem("urlPath")+"ValidateUserWebservice",
@@ -2610,13 +2616,15 @@ function syncSubmitEmpAdvance(){
 
 function saveEmployeeAdvanceAjax(jsonToSaveEA){
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+ 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveEA);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonToSaveEA = new Object();
-     jsonToSaveEA["dencc"] = dencc;
+     jsonToSaveEA["dencc"] = dencc+"$"+token;
         }
     var headerBackBtn=defaultPagePath+'backbtnPage.html';
      var pageRefSuccess=defaultPagePath+'success.html';
@@ -2956,14 +2964,16 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
 	 jsonToSaveBE["ProcessStatus"] = "1";
 	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+	 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonToSaveBE = new Object();
-     jsonToSaveBE["dencc"] = dencc;
- 	      }
+     jsonToSaveBE["dencc"] = dencc+"$"+token;
+ 	   }
      var pageRefSuccess=defaultPagePath+'success.html';
      var pageRefFailure=defaultPagePath+'failure.html';
 	 callSendForApprovalServiceForBEwithEA(jsonToSaveBE,busExpDetailsArr,empAdvArr,pageRefSuccess,pageRefFailure);
@@ -3332,22 +3342,108 @@ function populateMainPage(){
          j('#loading').hide();
      }
 
-function getEncryptionValue(msg){
-	var key = "urlKey";
-		var encrypted = CryptoJS.AES.encrypt(msg,key);  
-		var ivHex = encrypted.iv.toString();
-		//alert("ivHex"+ivHex);
-	    var ivSize = encrypted.algorithm.ivSize; // same as the blockSize
-		//alert("ivSize"+ivSize);
-	    var keySize = encrypted.algorithm.keySize;
-		//alert("keySize"+keySize);
-	    var keyHex = encrypted.key.toString();
-		//alert("keyHex"+keyHex);
-	    var saltHex = encrypted.salt.toString(); // must be sent as well
-		//alert("saltHex"+saltHex);
-	    var openSslFormattedCipherTextString = encrypted.toString(); // not used
-	    var cipherTextHex = encrypted.ciphertext.toString(); // must be sent
-	    
-	   var dencc=ivHex+'_'+ivSize+'_'+keySize+'_'+keyHex+'_'+saltHex+'_'+openSslFormattedCipherTextString+'_'+cipherTextHex;
-	return dencc;
-}
+ function logOut() {
+
+     var msg = "Please sync your pending expenses before you exit or they will be lost";
+
+     var entitlementMsg = confirm(msg);
+
+     if (entitlementMsg) {
+         deleteLocalDatabase();
+     } else {
+         closeNav();
+     }
+ }
+
+ function deleteLocalDatabase() {
+     try {
+         localStorage.clear();
+
+         if (mydb) {
+             mydb.transaction(function(t) {
+                 t.executeSql("delete from currencyMst");
+                 t.executeSql("delete from accountHeadMst");
+                 t.executeSql("delete from expNameMst");
+                 t.executeSql("delete from businessExpDetails");
+                 t.executeSql("delete from walletMst");
+                 t.executeSql("delete from travelModeMst");
+                 t.executeSql("delete from travelCategoryMst");
+                 t.executeSql("delete from cityTownMst");
+                 t.executeSql("delete from travelTypeMst");
+                 t.executeSql("delete from travelAccountHeadMst");
+                 t.executeSql("delete from travelExpenseNameMst");
+                 t.executeSql("delete from travelSettleExpDetails");
+                 t.executeSql("delete from travelRequestDetails");
+                 t.executeSql("delete from accountHeadEAMst");
+                 t.executeSql("delete from advanceType");
+                 t.executeSql("delete from employeeAdvanceDetails");
+                 t.executeSql("delete from currencyConversionMst");
+                 t.executeSql("delete from smsMaster");
+                 t.executeSql("delete from smsScrutinizerMst");
+                 t.executeSql("delete from profileMst");
+             });
+         }
+
+         location.reload(true);
+
+         setTimeout(function() {
+             init();
+         }, 200);
+
+     } catch (e) {
+         alert(e);
+     }
+ }
+
+ function logOut() {
+
+     var msg = "Please sync your pending expenses before you exit or they will be lost";
+
+     var entitlementMsg = confirm(msg);
+
+     if (entitlementMsg) {
+         deleteLocalDatabase();
+     } else {
+         closeNav();
+     }
+ }
+
+ function deleteLocalDatabase() {
+     try {
+         localStorage.clear();
+
+         if (mydb) {
+             mydb.transaction(function(t) {
+                 t.executeSql("delete from currencyMst");
+                 t.executeSql("delete from accountHeadMst");
+                 t.executeSql("delete from expNameMst");
+                 t.executeSql("delete from businessExpDetails");
+                 t.executeSql("delete from walletMst");
+                 t.executeSql("delete from travelModeMst");
+                 t.executeSql("delete from travelCategoryMst");
+                 t.executeSql("delete from cityTownMst");
+                 t.executeSql("delete from travelTypeMst");
+                 t.executeSql("delete from travelAccountHeadMst");
+                 t.executeSql("delete from travelExpenseNameMst");
+                 t.executeSql("delete from travelSettleExpDetails");
+                 t.executeSql("delete from travelRequestDetails");
+                 t.executeSql("delete from accountHeadEAMst");
+                 t.executeSql("delete from advanceType");
+                 t.executeSql("delete from employeeAdvanceDetails");
+                 t.executeSql("delete from currencyConversionMst");
+                 t.executeSql("delete from smsMaster");
+                 t.executeSql("delete from smsScrutinizerMst");
+                 t.executeSql("delete from profileMst");
+             });
+         }
+
+         location.reload(true);
+
+         setTimeout(function() {
+             init();
+         }, 200);
+
+     } catch (e) {
+         alert(e);
+     }
+ }
