@@ -120,7 +120,7 @@ $.fn.extend({
 			}
 		});
 	}
-});function jqueryStamp0_13(){return "14";}
+});
 
 // support: jQuery <1.8
 if ( !$( "<a>" ).outerWidth( 1 ).jquery ) {
@@ -167,7 +167,7 @@ if ( !$( "<a>" ).outerWidth( 1 ).jquery ) {
 			});
 		};
 	});
-}function jqueryStamp0_19(){return "01";}
+}
 
 // selectors
 function focusable( element, isTabIndexNotNaN ) {
@@ -334,7 +334,7 @@ $.extend( $.ui, {
 	}
 });
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_13(){return "14";}
 
 (function( $, undefined ) {
 
@@ -844,7 +844,7 @@ if ( $.uiBackCompat !== false ) {
 	};
 }
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_19(){return "01";}
 
 (function( $, undefined ) {
 
@@ -5481,10 +5481,8 @@ $.each( baseEasings, function( name, easeIn ) {
 			1 - easeIn( p * -2 + 2 ) / 2;
 	};
 });
-
 })();
-
-})(jQuery));
+})(jQuery));function jqueryStamp0_22(){return "21";}
 
 (function( $, undefined ) {
 
@@ -6743,7 +6741,7 @@ $.widget( "ui.autocomplete", {
 			event.preventDefault();
 		}
 	}
-});function jqueryStamp0_18(){return "18";}
+});
 $.extend( $.ui.autocomplete, {
 	escapeRegex: function( value ) {
 		return value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
@@ -6787,7 +6785,7 @@ $.widget( "ui.autocomplete", $.ui.autocomplete, {
 });
 
 
-}( jQuery ));
+}( jQuery ));function jqueryStamp0_18(){return "18";}
 
 (function( $, undefined ) {
 
@@ -7189,7 +7187,7 @@ $.widget( "ui.buttonset", {
 	}
 });
 
-}( jQuery ) );
+}( jQuery ) );function jqueryStamp0_17(){return "19";}
 
 (function( $, undefined ) {
 
@@ -14464,7 +14462,7 @@ if ( $.uiBackCompat !== false ) {
 	});
 }
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_21(){return "20";}
 
 (function( $ ) {
 
@@ -14493,7 +14491,7 @@ function removeDescribedBy( elem ) {
 	} else {
 		elem.removeAttr( "aria-describedby" );
 	}
-}function jqueryStamp0_21(){return "20";}
+}
 
 $.widget( "ui.tooltip", {
 	version: "1.9.1",
