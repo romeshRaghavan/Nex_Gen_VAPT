@@ -6,8 +6,8 @@ var companyName = "utkarsh";
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -85,8 +85,9 @@ function login()
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
                     if(check){
-                    	 	 token = generateToken();
-                      window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
+                       window.localStorage.setItem("Token",data.Token);
+                        token = generateToken();
+                       window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
                     }
                     else
                      window.localStorage.setItem("Password",password.value);
@@ -349,14 +350,18 @@ function viewTravelSettlementExp(){
 function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 	 var jsonToSaveBE = new Object();
 	 var headerBackBtn=defaultPagePath+'backbtnPage.html';
-	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");;
+	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");	 
+	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");
 	 jsonToSaveBE["ProcessStatus"] = "0";
+	 jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
+	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
 	 jsonToSaveBE["expenseDetails"] = jsonBEArr;
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
 	 var check = domainName.includes(companyName);
 	 if(check){
+	 jsonToSaveBE["Token"]=window.localStorage.getItem("Token");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
@@ -408,13 +413,17 @@ function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 	var headerBackBtn=defaultPagePath+'backbtnPage.html';
 	 var jsonToSaveTS = new Object();
+	 jsonToSaveTS["FirstName"]=window.localStorage.getItem("FirstName");	 
 	 jsonToSaveTS["employeeId"] = window.localStorage.getItem("EmployeeId");
 	 jsonToSaveTS["expenseDetails"] = jsonTSArr;
+	 jsonToSaveTS["UserName"]=window.localStorage.getItem("UserName");
+	 jsonToSaveTS["LastName"]=window.localStorage.getItem("LastName");
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
 	 var check = domainName.includes(companyName);
 	 if(check){
+	 jsonToSaveTS["Token"]=window.localStorage.getItem("Token");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTS);
 	 var token = generateToken();
@@ -463,10 +472,13 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 var jsonToSaveBE = new Object();
 	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");
 	 jsonToSaveBE["expenseDetails"] = jsonBEArr;
+	 jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
 	 jsonToSaveBE["startDate"]=expenseClaimDates.minInStringFormat;
 	 jsonToSaveBE["endDate"]=expenseClaimDates.maxInStringFormat;
+	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");
 	 jsonToSaveBE["DelayAllowCheck"]=false;
 	 jsonToSaveBE["BudgetingStatus"]=window.localStorage.getItem("BudgetingStatus");
+	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
 	 jsonToSaveBE["accountHeadId"]=accountHeadID;
 	 jsonToSaveBE["ProcessStatus"] = "1";
 	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
@@ -475,6 +487,7 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 var check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
+	 jsonToSaveBE["Token"]=window.localStorage.getItem("Token");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -596,11 +609,15 @@ function createExpNameDropDown(jsonExpNameArr){
 		}
 	}
 	
+	$(".dropdown-content").hide();
 	document.getElementById("expFromLoc").value = "";
 	document.getElementById("expToLoc").value = "";
 	document.getElementById("expNarration").value = "";
 	document.getElementById("expUnit").value = "";
 	document.getElementById("expAmt").value = "";
+	fromLocationWayPoint = "";
+	toLocationWayPoint = "";
+
 	$("a").click(function () { 
 		$("#mapLink").fadeTo("fast").removeAttr("href"); 
 	});
@@ -1049,8 +1066,13 @@ function saveTravelRequestAjax(jsonToSaveTR){
  	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	var jsonToSaveTRTemp = new Object();
+	jsonToSaveTR["UserName"]=window.localStorage.getItem("UserName");
+	jsonToSaveTR["FirstName"]=window.localStorage.getItem("FirstName");	 
+	jsonToSaveTR["LastName"]=window.localStorage.getItem("LastName");
+	jsonToSaveTR["EmployeeId"]=window.localStorage.getItem("EmployeeId");
 
 	if(check){
+	 jsonToSaveTR["Token"]=window.localStorage.getItem("Token");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
 	 jsonToSaveTRTemp = jsonToSaveTR;
@@ -1074,9 +1096,12 @@ function saveTravelRequestAjax(jsonToSaveTR){
 							setTREntitlementExceedMessage(data,jsonToSaveTRTemp);
 						}else{
 							setTREntitlementExceedMessage(data,jsonToSaveTR);
-						}							 
+						}
 						}
 					  successMessage = data.Message;
+					  j('#loading_Cat').hide();
+					  j('#mainContainer').load(pageRefFailure);
+					   appPageHistory.push(pageRefFailure);
                       //alert(window.lang.translate(successMessage));
 
 					  
@@ -1397,6 +1422,10 @@ function setPerUnitDetails(transaction, results){
 			document.getElementById("expNarration").value = "";
 			document.getElementById("expUnit").value = "";
 			document.getElementById("expAmt").value = "";
+			$(".dropdown-content").hide();
+			fromLocationWayPoint = "";
+			toLocationWayPoint = "";
+
 		    if(perUnitDetailsJSON.expenseIsfromAndToReqd=='N'){
 				document.getElementById("expFromLoc").value="";
 				document.getElementById("expToLoc").value="";
@@ -1407,6 +1436,9 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expNarration").disabled =false;
 				document.getElementById("expNarration").style.backgroundColor='#FFFFFF';
 				document.getElementById("mapImage").style.display= "none";
+				$(".dropdown-content").hide();
+				fromLocationWayPoint = "";
+				toLocationWayPoint = "";
 			}else{
 				document.getElementById("expFromLoc").disabled =false;
 				document.getElementById("expToLoc").disabled =false;
@@ -1414,16 +1446,21 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expToLoc").value="";
 				document.getElementById("expNarration").value="";
 				document.getElementById("expFromLoc").style.backgroundColor='#FFFFFF'; 
-				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF'; 
+				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF';
+				$(".dropdown-content").hide();
+				fromLocationWayPoint = "";
+				toLocationWayPoint = "";
 				//alert(window.localStorage.getItem("MobileMapRole"))
 				if(window.localStorage.getItem("MobileMapRole") == 'true') 
 				{
+					if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 					attachGoogleSearchBox(document.getElementById("expFromLoc"));
 					attachGoogleSearchBox(document.getElementById("expToLoc"));
+					}
 					document.getElementById("mapImage").style.display="";
 					document.getElementById("expNarration").disabled =true;
 					document.getElementById("expNarration").style.backgroundColor='#d1d1d1';
-				} 
+				}
 			}
 			if(perUnitDetailsJSON.isUnitReqd=='Y'){
 				document.getElementById("expAmt").value="";
@@ -2141,9 +2178,13 @@ function resetImageData(){
 		 		var userName =window.localStorage.getItem("UserName");
 		 		var domainName = userName.split('@')[1];
 				var check = domainName.includes(companyName);
+				 jsonWalletArr[i]["UserName"]=window.localStorage.getItem("UserName");
+				 jsonWalletArr[i]["FirstName"]=window.localStorage.getItem("FirstName");	 
+				 jsonWalletArr[i]["LastName"]=window.localStorage.getItem("LastName");
     		       if(check)
 					{
 				var dencc = "";
+				jsonWalletArr[i]["Token"]=window.localStorage.getItem("Token");
 				var tempJSON = JSON.stringify(jsonWalletArr[i]);
 				var token = generateToken();
    				dencc = getNewValueDefine(tempJSON,token);
@@ -2326,8 +2367,7 @@ function validateValidMobileUser(){
 }
 
 function attachGoogleSearchBox(component){
-	//alert("attachGoogleSearchBox")
-	//alert("component   "+component.id)
+	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 	var searchBox = new google.maps.places.SearchBox(component);
 	searchBox.addListener("places_changed", function(){
 		//alert("here")
@@ -2341,10 +2381,12 @@ function attachGoogleSearchBox(component){
 					$(this).fadeIn("fast").attr("href", "#openModal"); 
 				});
 			}
-	});
+		});
+	}
 }
 
 function viewMap(){
+	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 		document.getElementById("openModal").style.display="block";
 		fromLoc = document.getElementById("expFromLoc");
 		toLoc = document.getElementById("expToLoc");
@@ -2354,7 +2396,8 @@ function viewMap(){
 			calculateAndDisplayRoute();
 			document.getElementById("mapImage").setAttribute('disabled', false);
 		}
-	}	
+	}
+}
 	
 function calculateAndDisplayRoute() {
 		//alert("calculateAndDisplayRoute")
@@ -2596,13 +2639,16 @@ function syncSubmitEmpAdvance(){
 
 		 var jsonToSaveEA = new Object();
 		 j('#loading_Cat').show();
-		 jsonToSaveEA["EmployeeId"] = window.localStorage.getItem("EmployeeId");;
-		 jsonToSaveEA["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");;
+		 jsonToSaveEA["EmployeeId"] = window.localStorage.getItem("EmployeeId");
+		 jsonToSaveEA["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
+		 jsonToSaveEA["LastName"]=window.localStorage.getItem("LastName");
 		 jsonToSaveEA["empAdvDate"] = empAdvDate;
 		 jsonToSaveEA["empAdvTitle"] = empAdvTitle;
+		 jsonToSaveEA["UserName"]=window.localStorage.getItem("UserName");
 		 jsonToSaveEA["empAdvjustification"] = empAdvjustification;
 		 jsonToSaveEA["empAdvAmount"] = empAdvAmount;
 		 jsonToSaveEA["empAdvType_id"] = empAdvType_id;
+		 jsonToSaveEA["FirstName"]=window.localStorage.getItem("FirstName");	 
 		 jsonToSaveEA["empAccHead_id"] = empAccHead_id;
 		 
 		 
@@ -2620,6 +2666,7 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
+	 jsonToSaveEA["Token"]=window.localStorage.getItem("Token");
 	 var tempJSON = JSON.stringify(jsonToSaveEA);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -2956,9 +3003,12 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
      jsonToSaveBE["refundToEmp"] = refundToEmp;
      jsonToSaveBE["recoverFromEmp"] = recoverFromEmp;
      jsonToSaveBE["employeeAdvDeatils"] = jsonEAArr;
+     jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
 	 jsonToSaveBE["startDate"]=expenseClaimDates.minInStringFormat;
 	 jsonToSaveBE["endDate"]=expenseClaimDates.maxInStringFormat;
 	 jsonToSaveBE["DelayAllowCheck"]=false;
+	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");	 
+	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
 	 jsonToSaveBE["BudgetingStatus"]=window.localStorage.getItem("BudgetingStatus");
 	 jsonToSaveBE["accountHeadId"]=accountHeadID;
 	 jsonToSaveBE["ProcessStatus"] = "1";
@@ -2968,6 +3018,7 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
 	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
+	 jsonToSaveBE["Token"]=window.localStorage.getItem("Token");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -3447,3 +3498,207 @@ function populateMainPage(){
          alert(e);
      }
  }
+
+//************************************** MAPMYINDIA - START **********************************************//
+
+function attachQueryValues(val){
+
+if(window.localStorage.getItem("MobileMapRole") == 'true' && window.localStorage.getItem("MapProvider") == "MAPMYINDIA") {
+var expFromLoc = document.getElementById("expFromLoc").value;
+var expToLoc = document.getElementById("expToLoc").value;
+var locationQuery = "";
+var queryValue =  "";
+
+if(val == 1){
+	 locationQuery = document.getElementById("expFromLoc").value;
+	 queryValue = locationQuery;
+	 attachMapMyIndiaSearchBox(queryValue,val);
+}else if(val == 2){
+	 locationQuery = document.getElementById("expToLoc").value;
+	 queryValue = locationQuery;
+	 attachMapMyIndiaSearchBox(queryValue,val);	
+}
+
+}
+ }
+
+function attachMapMyIndiaSearchBox(query,val){
+//alert("attachGoogleSearchBox");
+
+	if(query.length >= 5 ){
+
+  j.ajax({
+				  url: "https://outpost.mapmyindia.com/api/security/oauth/token?grant_type=client_credentials",
+				  type: 'POST',
+				  contentType: 'application/x-www-form-urlencoded',
+				  crossDomain: true,
+				  data: jQuery.param({ 
+   						 client_id:"gHvaOPpCYTs20dVHSCo9i_zO5UNPDMDAro9HxE01tgY=",
+   						 client_secret: "c6M8QBqRa6daTwllDT86UmhOM4jFu5t6Nz6rLf8XLTU="
+    					
+ 						 }),
+				success: function (response) {
+
+					//alert("in success");
+        			//alert(response.token_type);
+        			tokenType = response.token_type;
+        			accessToken = response.access_token;
+					getPlaceData(tokenType,accessToken,query,val);
+
+  						  },
+   				 error: function () {
+        			alert("error");
+    }
+			});
+}
+
+}
+
+function getPlaceData(tokenType,accessToken,queryValue,val){
+	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
+	var authorization = tokenType + " " + accessToken;
+	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
+console.log("url :  "+tempurl);
+	console.log("authorization : "+authorization);
+
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "method": "GET",
+  "headers": {
+  "authorization": authorization,
+  "cache-control": "no-cache"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+	setJSONDataLocationField(response,val);
+});
+ 
+}
+
+function setJSONDataLocationField(jsondata,val){
+	//alert(JSON.stringify(jsondata));
+ var div_data='';
+	 $.each(jsondata.suggestedLocations,function(i,obj){
+
+                div_data = div_data +"<a herf = '' id="+obj.latitude+"$"+obj.longitude+" value='"+obj.placeName+'-'+obj.placeAddress+"'>"+obj.placeName+'-'+obj.placeAddress+"</a>"
+
+
+                });  
+
+if(val == 1){
+  var my_list=document.getElementById("json-datalist");
+		my_list.innerHTML = div_data;
+		//alert("div_data : "+div_data);
+		 document.getElementById('json-datalist').style.display="";
+}else if(val == 2){
+	var my_list=document.getElementById("json-datalist1");
+		my_list.innerHTML = div_data;
+		document.getElementById('json-datalist1').style.display="";
+}
+
+if(val == 1){
+ j("#json-datalist a").click(function(){
+     var value = j(this).text();
+     var id = j(this).attr('id');
+
+      fromLocationWayPoint = id;
+document.getElementById("expFromLoc").value = value;
+ document.getElementById('json-datalist').style.display="none";
+       calulateUnitFromLoction();
+  });
+
+hideDropDownContents();
+
+}else if(val == 2){
+	j("#json-datalist1 a").click(function(){
+   
+     var value = j(this).text();
+     var id = j(this).attr('id');
+
+     toLocationWayPoint = id;
+	document.getElementById("expToLoc").value = value;
+	document.getElementById('json-datalist1').style.display="none";
+       calulateUnitFromLoction();
+
+  });
+	hideDropDownContents();
+
+	}
+      
+}
+
+function hideDropDownContents(){
+
+	 j("#expDate").click(function(){   
+ j(".dropdown-content").hide();
+  });
+
+         j("#expToLoc").click(function(){   
+ j(".dropdown-content").hide();   
+  });
+
+           j("#expFromLoc").click(function(){   
+ j(".dropdown-content").hide();  
+  });
+}
+
+ function calulateUnitFromLoction(){
+
+if(fromLocationWayPoint != '' && toLocationWayPoint != ''){
+if(fromLocationWayPoint.includes("$") && toLocationWayPoint.includes("$")){
+var fromLongLat = fromLocationWayPoint.split('$');
+var fromLat = fromLongLat[0];
+var fromLong = fromLongLat[1];
+
+var toLongLat = toLocationWayPoint.split('$');
+var toLat = toLongLat[0];
+var toLong = toLongLat[1];
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://apis.mapmyindia.com/advancedmaps/v1/bemzvgf9d3at3j7rt85bpvmwuhaumd59/distance_matrix/driving/"+fromLong+","+fromLat+";"+toLong+","+toLat+"",
+  "method": "GET",
+  "headers": {
+  "cache-control": "no-cache"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  wayPoint = document.getElementById("wayPointunitValue");
+   var data = {};
+	     data.start = {'lat': fromLat+'$'+fromLong}
+	     data.end = {'lat': toLat+'$'+toLong}
+	     var str = JSON.stringify(data);
+	   	 wayPoint.value=str;
+
+  		setUnitBasedOnResponse(response)
+});
+
+}else{
+	unitValue = document.getElementById("expUnit");
+	unitValue.value = 1;
+ }
+}else{
+	unitValue = document.getElementById("expUnit");
+	unitValue.value = 1;
+ }
+}
+
+function setUnitBasedOnResponse(response){
+	console.log(JSON.stringify(response));
+
+	 $.each(response.results.distances,function(i,obj){
+	var f_units = obj;
+    var units = Math.trunc(f_units[1])
+	var unitKM = parseInt(units)/1000;
+ 	unitValue = document.getElementById("expUnit");
+	unitValue.value = Math.round(unitKM);
+	 });
+	 returnUnitResult();
+}
+
+//************************************** MAPMYINDIA - END **********************************************//
